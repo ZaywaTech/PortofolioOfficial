@@ -1,25 +1,30 @@
-let menuIcon = document.querySelector('#menu-icon');
-let navbar = document.querySelector('.navbar');
-let sections = document.querySelectorAll('section');
-let navLinks = document.querySelectorAll('header nav a');
+let currentSlide = 0;
+const slides = document.querySelectorAll('.service-slide');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
 
-window.onscroll = () => {
-    sections.forEach(sec => {
-        let top =  window.scrollY;
-        let offset = sec.offsetTop - 150;
-        let height = sec.offsetHeight;
-        let id = sec.getAttribute('id');
-        
-        if(top >= offset && top < offset + height){
-            navLinks.forEach(links => {
-                links.classList.remove('active');
-                document.querySelector('header nav a[href*=' + id + ']').classList.add ('active')
-            })
-        }
-    })
+function showSlide(index) {
+    if (index >= slides.length) {
+        currentSlide = 0;
+    } else if (index < 0) {
+        currentSlide = slides.length - 1;
+    }
+    const offset = -currentSlide * 100;
+    document.querySelector('.service-slider').style.transform = `translateX(${offset}%)`;
 }
 
-menuIcon.onclick = () => {
-    menuIcon.classList.toggle('bx-x');
-    navbar.classList.toggle('active');
-}
+nextBtn.addEventListener('click', () => {
+    currentSlide++;
+    showSlide(currentSlide);
+});
+
+prevBtn.addEventListener('click', () => {
+    currentSlide--;
+    showSlide(currentSlide);
+});
+
+// Auto-slide every 5 seconds
+setInterval(() => {
+    currentSlide++;
+    showSlide(currentSlide);
+}, 5000);

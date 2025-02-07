@@ -825,4 +825,6 @@ span {
     .wrapper {
         grid-template-columns: 1fr;
     }
+
+    /* Gaya gambar sebelum hover */
 }
